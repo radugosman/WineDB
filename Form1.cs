@@ -104,5 +104,46 @@ namespace WineDB
                 }
             }
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (comboBoxProducer.Text != null)
+            {
+                string region_name = comboBoxRegion.Text;
+                string producer = comboBoxProducer.Text;
+                db_connection = new DB_Connection();
+                connection = new SqlConnection();
+                connection = db_connection.getConnection;
+
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.CommandText = $"INSERT INTO producer VALUES ('{producer}', (SELECT region_name FROM region WHERE region_name = '{region_name}'))";
+                sqlCommand.Connection = connection;
+
+                connection.Open();
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            } 
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (comboBoxProducer.Text != null)
+            {
+                string producer = comboBoxProducer.Text;
+                db_connection = new DB_Connection();
+                connection = new SqlConnection();
+                connection = db_connection.getConnection;
+
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.CommandText = $"DELETE FROM producer WHERE producer_name = '{producer}'";
+                sqlCommand.Connection = connection;
+
+                connection.Open();
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            } 
+        }
     }
 }
